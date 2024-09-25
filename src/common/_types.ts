@@ -88,5 +88,12 @@ export interface GameOverviewResponse {
 }
 
 export interface GameIdLookupResponse {
-  [steamId: string]: string
+  found: boolean,
+  game: {
+    id: string,
+    title: string,
+    slug: string,
+    mature: boolean,
+    type: string
+  }
 }
