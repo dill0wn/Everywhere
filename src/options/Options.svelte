@@ -1,5 +1,6 @@
 <script lang="ts">
     import {onMount} from "svelte";
+    import {getCountry} from "../common/Utils";
     import browser from "webextension-polyfill";
 
     const countries = [
@@ -256,7 +257,7 @@
 
     let country = "US";
     onMount(async () => {
-        country = ((await browser.storage.local.get("country"))?.country ?? "US") as unknown as string;
+        country = await getCountry() as unknown as string;
     });
 
     function handleSelection(e: Event) {

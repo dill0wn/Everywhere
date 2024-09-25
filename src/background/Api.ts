@@ -1,6 +1,7 @@
 import browser from "webextension-polyfill";
 import {type GameIdLookupResponse, type GameOverviewResponse} from "../common/_types";
 import SteamId from "../common/SteamId";
+import {getCountry} from "../common/Utils";
 import Config from "../config";
 
 async function gameIdLookup(steamId: SteamId): Promise<null|string> {
@@ -20,8 +21,7 @@ async function gameIdLookup(steamId: SteamId): Promise<null|string> {
 }
 
 async function gameOverview(id: string): Promise<GameOverviewResponse|null> {
-    const country = ((await browser.storage.local.get("country"))?.country) ?? "US";
-
+    const country = await getCountry();
     const response = await fetch("https://api.isthereanydeal.com/games/overview/v2?"+(new URLSearchParams({
         key: Config.ITAD.apiKey,
         country
